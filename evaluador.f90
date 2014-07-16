@@ -13,6 +13,7 @@ USE GenerarMpb
       CHARACTER*20 paramFile
       CHARACTER*7 fileFormat
       CHARACTER*15 betaFile
+      CHARACTER*30 nanReplace
       CHARACTER*30 mpbExecFormat
       CHARACTER*30 runBetasExecFormat
       LOGICAL :: file_exists
@@ -55,6 +56,8 @@ SUBROUTINE dispersiones(my_rank, r1, r2, rg, re, dispersion)
           write(betaFile, "(A5, I3, A4)") "betas", my_rank, ".out"
       	 END IF
 
+         write(nanReplace, *) "sed -i 's/NaN/-0.9999999E+99/g' ", betaFile
+
          write (paramFile, fileFormat) "mpbFile", my_rank
          INQUIRE(FILE=paramFile, EXIST=file_exists) 
          ! Si no existe el archivo, no se procesa
@@ -71,6 +74,8 @@ SUBROUTINE dispersiones(my_rank, r1, r2, rg, re, dispersion)
             write(runBetasExec, runBetasExecFormat) "run_betas anillos", my_rank, ".out 0.5 > betas", my_rank, ".out"
             CALL SYSTEM(runBetasExec)
             write(*, *) runBetasExec
+            CALL SYSTEM(nanReplace)
+
             OPEN(666, FILE=betaFile, STATUS='UNKNOWN', FORM = 'FORMATTED', ACTION='READ')
             DO J=1, 4
 			      read (666, *) 
