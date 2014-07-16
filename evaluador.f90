@@ -13,7 +13,7 @@ USE GenerarMpb
       CHARACTER*20 paramFile
       CHARACTER*7 fileFormat
       CHARACTER*15 betaFile
-      CHARACTER*30 nanReplace
+      CHARACTER*50 nanReplace
       CHARACTER*30 mpbExecFormat
       CHARACTER*30 runBetasExecFormat
       LOGICAL :: file_exists
