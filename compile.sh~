@@ -1,0 +1,6 @@
+mpif90 -o splitStepDistribuido splitStepDistribuido.f90 SplitStepMod.f90 inputFunctions.f90 ConstantsMod.f90 inputParametersMod.f90 inputFileMod.f90 subroutines.f90 DebugMod.f90 sdft.f
+
+mpif90 -o calculosDistribuido calculos.f90 GenerarMpb.f90 
+
+mpif90 -o genetico mpi_pikaia.f ff_slave.f mpi_fitness.f pikaia_master.f userff.f GenerarMpb.f90 evaluador.f90
+
