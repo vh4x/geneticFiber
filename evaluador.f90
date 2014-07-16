@@ -16,6 +16,8 @@ USE GenerarMpb
       CHARACTER*50 nanReplace
       CHARACTER*30 mpbExecFormat
       CHARACTER*30 runBetasExecFormat
+      CHARACTER*20 createLocal
+      CHARACTER*20 cdLocal
       LOGICAL :: file_exists
 
 
@@ -44,16 +46,22 @@ SUBROUTINE dispersiones(my_rank, r1, r2, rg, re, dispersion)
       	 	write (mpbExecFormat, *) "(A11, I1, A10, I1, A4)"
       	 	write (runBetasExecFormat, *) "(A17, I1, A16, I1, A4)"
           write(betaFile, "(A5, I1, A4)") "betas", my_rank, ".out"
+          write(createLocal, "(A6, I1)") "mkdir ", my_rank
+          write(cdLocal, "(A3, I1)") "cd ", my_rank
       	 ELSE IF (my_rank.gt.9) THEN
       	 	write (fileFormat, "(A7)") "(A7,I2)"
       	 	write (mpbExecFormat, *) "(A11, I2, A10, I2, A4)"
       	 	write (runBetasExecFormat, *) "(A17, I2 A16, I2, A4)"
           write(betaFile, "(A5, I2, A4)") "betas", my_rank, ".out"
+          write(createLocal, "(A6, I2)") "mkdir ", my_rank
+          write(cdLocal, "(A3, I2)") "cd ", my_rank
       	 ELSE IF (my_rank.gt.99) THEN
       	 	write (fileFormat, "(A7)") "(A7,I3)"
       	 	write (mpbExecFormat, *) "(A11, I3, A10, I3, A4)"
       	 	write (runBetasExecFormat, *) "(A17, I3, A16, I3, A4)"
           write(betaFile, "(A5, I3, A4)") "betas", my_rank, ".out"
+          write(createLocal, "(A6, I3)") "mkdir ", my_rank
+          write(cdLocal, "(A3, I3)") "cd ", my_rank
       	 END IF
 
          write(nanReplace, *) "sed -i 's/NaN/-0.9999999E+99/g' ", betaFile
@@ -64,6 +72,8 @@ SUBROUTINE dispersiones(my_rank, r1, r2, rg, re, dispersion)
          !IF (.NOT.file_exists) THEN
           !  write (*, *) "No existe el archivo de entrada ", paramFile
          !ELSE
+            CALL SYSTEM (createLocal)
+            CALL SYSTEM (cdLocal)
             ! Llamada al procedimiento para generar el archivo MPB y luego llamadas para correrlo
             CALL escribirMpb(my_rank, 0.3, 0.3, 0.6, 0.6)
             file = ""
