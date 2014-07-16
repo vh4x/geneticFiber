@@ -75,7 +75,7 @@ SUBROUTINE dispersiones(my_rank, r1, r2, rg, re, dispersion)
             CALL SYSTEM (createLocal)
             !CALL SYSTEM (cdLocal)
             ! Llamada al procedimiento para generar el archivo MPB y luego llamadas para correrlo
-            CALL escribirMpb(my_rank, 0.3, 0.3, 0.6, 0.6)
+            CALL escribirMpb(my_rank, r1, r2, rg, re)
             file = ""
             write(mpbExec, mpbExecFormat) "mpb mpbFile", my_rank, " > ./", my_rank, "/anillos", my_rank, ".out"
             CALL SYSTEM(mpbExec)

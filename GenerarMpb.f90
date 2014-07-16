@@ -9,10 +9,10 @@ CONTAINS
 
 SUBROUTINE escribirMpb(rank, r1, r2, rg, re)
   INTEGER, INTENT(IN) :: rank
-  REAL, INTENT(IN) :: r1
-  REAL, INTENT(IN)  :: r2
-  REAL, INTENT(IN)  :: rg
-  REAL, INTENT(IN)  :: re
+  REAL*8, INTENT(IN) :: r1
+  REAL*8, INTENT(IN)  :: r2
+  REAL*8, INTENT(IN)  :: rg
+  REAL*8, INTENT(IN)  :: re
   file = ""
   write (file, "(A7,I1)") "mpbFile", rank
   OPEN(UNIT=1, FILE=file, ACTION="WRITE", STATUS='REPLACE')
@@ -36,10 +36,10 @@ SUBROUTINE functions
 END SUBROUTINE functions
 
 SUBROUTINE constants(r1, r2, rg, re)
-  REAL, INTENT(IN)  :: r1
-  REAL, INTENT(IN)  :: r2
-  REAL, INTENT(IN)  :: rg
-  REAL, INTENT(IN)  :: re
+  REAL*8, INTENT(IN)  :: r1
+  REAL*8, INTENT(IN)  :: r2
+  REAL*8, INTENT(IN)  :: rg
+  REAL*8, INTENT(IN)  :: re
   write(1, *) ""
   write(1, *) ";;; ### CONSTANTS ###########"
   write(1, *) "(define n 1.4491)"
